@@ -1,5 +1,8 @@
+
 #ifndef BITSET_HPP
 #define BITSET_HPP
+
+#include <string>
 
 class Bitset{
 public:
@@ -8,7 +11,7 @@ public:
   Bitset();
 
   // TODO COMMENT
-  Bitset(intmax_t size);
+  Bitset(int size);
 
   // TODO COMMENT
   Bitset(const std::string & value);
@@ -17,25 +20,25 @@ public:
   ~Bitset();
 
   Bitset(const Bitset & ) = delete;
-  Bitset & operator=(const Bitset &) = delete;
+  Bitset& operator=(const Bitset &) = delete;
 
   // TODO COMMENT
-  intmax_t size() const;
+  int size() const;
 
   // TODO COMMENT
   bool good() const;
 
   // TODO COMMENT
-  void set(intmax_t index);
+  void set(int index);
 
   // TODO COMMENT
-  void reset(intmax_t index);
+  void reset(int index);
 
   // TODO COMMENT
-  void toggle(intmax_t index);
+  void toggle(int index);
 
   // TODO COMMENT
-  bool test(intmax_t index);
+  bool test(int index);
 
   // TODO COMMENT
   std::string asString() const;
@@ -43,9 +46,9 @@ public:
 private:
 
   // TODO
-  
-  int *bit_array;
-  int N;
+    bool validity;
+    int *bit_array;
+    int N;
 };
 
 #endif
