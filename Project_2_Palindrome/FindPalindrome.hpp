@@ -8,11 +8,17 @@ class FindPalindrome{
 
 private:
 	// private stuff that you define and implement goes here...
-	
+	std::vector<std::string> vectorList;
+	std::vector<std::vector<std::string>> palindromeList;
+	int	palindromeCount;
 	// ...
 	
+	
+	bool exist(std::string s) const;//finds
 	// private stuff that you are given or is specified in the project
 	// description...
+	
+	
 	/** recursive findPalindrome internal method (you write this 
 	    recursive function per the project description). You may not
 	    change the signature. The method must call itself recursively.

@@ -15,12 +15,29 @@ using namespace std;
 static void convertToLowerCase(string & value)
 {
 	locale loc;
-	for (int i=0; i<value.size(); i++) {
+	for (unsigned int i=0; i<value.size(); i++) {
 		value[i] = tolower(value[i],loc);
 	}
 }
 
 //------------------- PRIVATE CLASS METHODS ------------------------------------
+
+bool FindPalindrome::exist(std::string s) const{
+	int start = 0, end = vectorList.size() - 1;
+	while (start <= end) {
+		int middle = start + (end - start) / 2;
+		
+		if (convertToLowerCase(s) == convertToLowerCase(vectorList[middle]))
+			return true;
+		if (s > (vectorList[middle])){
+			start = middle + 1;
+		}else{
+			end = middle - 1;
+		}
+	}
+	return false;
+}
+
 
 // private recursive function. Must use this signature!
 void FindPalindrome::recursiveFindPalindromes(vector<string>
@@ -51,48 +68,102 @@ bool FindPalindrome::isPalindrome(string currentString) const
 
 FindPalindrome::FindPalindrome()
 {
-	// TODO need to implement this...
+	palindromeCount = 0;
 }
 
 FindPalindrome::~FindPalindrome()
 {
-	// TODO need to implement this...
+	//vectors don't need to be destroyed
+	
 }
 
 int FindPalindrome::number() const
 {
-	// TODO need to implement this...
-	return 10;
+	return palindromeCount;
 }
 
 void FindPalindrome::clear()
 {
-	// TODO need to implement this...
+	palindromeCount = 0;
+	vectorList.clear();
+	palindromeList.clear();
 }
 
 bool FindPalindrome::cutTest1(const vector<string> & stringVector)
 {
-	// TODO need to implement this...
-	return false;
+	char most = 'A';
+	int ct = 0;
+	int highest_ct = 0;
+	int highest = 0;
+	for(int k = 65; k < 91; k++){
+		ct = 0;
+		most = k;
+		for(unsigned int i= 0; i < stringVector.size(); i ++){
+			for(unsigned int j = 0; j < stringVector[i].length(); j ++){
+				if(toupper(stringVector[i][j]) == most){
+					ct++;
+				}
+			}
+		}
+		if(ct > highest){
+			highest = ct;
+			highest_ct = 1;
+		}else if(ct == highest){
+			highest_ct++;
+		}
+	}
+	if((highest_ct % 2 != 0) && highest_ct > 1){
+		return false;
+	}
+	return true;
 }
 
 bool FindPalindrome::cutTest2(const vector<string> & stringVector1,
                               const vector<string> & stringVector2)
 {
-	// TODO need to implement this...
+	
 	return false;
 }
 
 bool FindPalindrome::add(const string & value)
 {
-	// TODO need to implement this...
-	return false;
+	for(unsigned int i= 0; i < value.length(); i ++){
+		if((value[i] < 65 && value[i] > 90) || (value[i] < 97 && value[i] > 122)){
+			return false;
+		}
+	}
+	if(exist(value)){
+		return false;
+	}
+	vectorList.push_back(value);
+	return true;
 }
 
 bool FindPalindrome::add(const vector<string> & stringVector)
 {
-	// TODO need to implement this...
-	return false;
+	string value = "";
+	bool test = true;
+	unsigned int k;
+	for(k = 0; k < stringVector.size(); k++){
+		value = stringVector[k];
+		for(unsigned int i= 0; i < value.length(); i ++){
+			if((value[i] < 65 && value[i] > 90) || (value[i] < 97 && value[i] > 122)){
+				test = false;
+				break;
+			}
+		}
+		if(exist(value)){
+			test = false;
+			break;
+		}
+		vectorList.push_back(value);
+	}
+	if(!test){
+		for(unsigned int j = 0; j < k; j++){
+			vectorList.pop_back();
+		}
+	}
+	return test;
 }
 
 vector< vector<string> > FindPalindrome::toVector() const
