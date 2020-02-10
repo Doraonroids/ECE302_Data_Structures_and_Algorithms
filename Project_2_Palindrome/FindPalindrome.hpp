@@ -13,7 +13,7 @@ private:
 	int	palindromeCount;
 	// ...
 	
-	
+	std::string tostring(std::vector<std::string> vec) const;
 	bool exist(std::string s) const;//finds
 	// private stuff that you are given or is specified in the project
 	// description...

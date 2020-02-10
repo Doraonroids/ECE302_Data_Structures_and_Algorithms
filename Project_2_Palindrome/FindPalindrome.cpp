@@ -20,9 +20,16 @@ static void convertToLowerCase(string & value)
 	}
 }
 
-//------------------- PRIVATE CLASS METHODS ------------------------------------
 
-bool FindPalindrome::exist(std::string s) const{
+//------------------- PRIVATE CLASS METHODS ------------------------------------
+string FindPalindrome::tostring(vector<string> vec) const{
+	string newstring = "";
+	for(unsigned int i = 0; i < vec.size(); i++){
+		newstring += vec[i];
+	}
+	return newstring;
+}
+bool FindPalindrome::exist(string s) const{
 	int start = 0, end = vectorList.size() - 1;
 	while (start <= end) {
 		int middle = start + (end - start) / 2;
@@ -43,7 +50,18 @@ bool FindPalindrome::exist(std::string s) const{
 void FindPalindrome::recursiveFindPalindromes(vector<string>
         candidateStringVector, vector<string> currentStringVector)
 {
-	// TODO need to implement this recursive function!
+	
+	if(cutTest1(candidateStringVector)){
+		return;}
+	if(cutTest2(candidateStringVector,currentStringVector)){
+		return;}
+		
+	if(isPalindrome(tostring(candidateStringVector))){
+		palindromeCount++;
+		palindromeList.push_back(candidateStringVector);
+	}
+	
+	
 	return;
 }
 
@@ -74,6 +92,9 @@ FindPalindrome::FindPalindrome()
 FindPalindrome::~FindPalindrome()
 {
 	//vectors don't need to be destroyed
+	palindromeCount = 0;
+	vectorList.clear();
+	palindromeList.clear();
 	
 }
 
@@ -113,15 +134,24 @@ bool FindPalindrome::cutTest1(const vector<string> & stringVector)
 		}
 	}
 	if((highest_ct % 2 != 0) && highest_ct > 1){
-		return false;
+		return true;
 	}
-	return true;
+	return false;
 }
 
 bool FindPalindrome::cutTest2(const vector<string> & stringVector1,
                               const vector<string> & stringVector2)
 {
+	unsigned int length = 0;
 	
+	if(tostring(stringVector1).length() <= tostring(stringVector2).length()){
+		length = tostring(stringVector2).length();
+	}else{
+		length = tostring(stringVector1).length();
+	}
+	for(unsigned int i = 0; i < length; i ++){
+		
+	}
 	return false;
 }
 
@@ -168,8 +198,6 @@ bool FindPalindrome::add(const vector<string> & stringVector)
 
 vector< vector<string> > FindPalindrome::toVector() const
 {
-	// TODO need to implement this...
-	vector<vector<string>> returnThingie;
-	return returnThingie;
+	return palindromeList;
 }
 
