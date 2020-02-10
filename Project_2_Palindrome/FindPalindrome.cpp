@@ -60,7 +60,13 @@ void FindPalindrome::recursiveFindPalindromes(vector<string>
 		palindromeCount++;
 		palindromeList.push_back(candidateStringVector);
 	}
-	
+	candidateStringVector.push_back(currentStringVector[currentStringVector.size() - 1]);
+	currentStringVector.pop_back();
+	if(currentStringVector.size() > 0){
+		recursiveFindPalindromes(candidateStringVector,currentStringVector);
+		candidateStringVector.pop_back();
+	}
+
 	
 	return;
 }
