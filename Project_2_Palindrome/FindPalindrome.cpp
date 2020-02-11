@@ -30,15 +30,30 @@ string FindPalindrome::tostring(vector<string> vec) const{
 	return newstring;
 }
 bool FindPalindrome::exist(string s) const{
+	/*
 	int start = 0, end = vectorList.size() - 1;
+	convertToLowerCase(s);
+	
 	while (start <= end) {
 		int middle = start + (end - start) / 2;
-		if (toupper(s) == toupper(vectorList[middle]))
+		string temp = vectorList.at(middle);
+		convertToLowerCase(temp);
+		if (s == temp)
 			return true;
 		if (s > (vectorList[middle])){
 			start = middle + 1;
 		}else{
 			end = middle - 1;
+		}
+	}
+	return false;*/
+	string temp = "";
+	convertToLowerCase(s);
+	for(unsigned int i = 0; i < vectorList.size(); i++){
+		temp = vectorList.at(i);
+		convertToLowerCase(temp);
+		if(temp == s){
+			return true;
 		}
 	}
 	return false;
@@ -185,6 +200,9 @@ bool FindPalindrome::add(const string & value)
 		return false;
 	}
 	vectorList.push_back(value);
+	palindromeList.clear();
+	vector<string> empty;
+	recursiveFindPalindromes(empty, vectorList);
 	return true;
 }
 
