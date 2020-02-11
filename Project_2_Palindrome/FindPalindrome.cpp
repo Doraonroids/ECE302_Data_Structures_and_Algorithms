@@ -29,24 +29,9 @@ string FindPalindrome::tostring(vector<string> vec) const{
 	}
 	return newstring;
 }
+
 bool FindPalindrome::exist(string s) const{
-	/*
-	int start = 0, end = vectorList.size() - 1;
-	convertToLowerCase(s);
-	
-	while (start <= end) {
-		int middle = start + (end - start) / 2;
-		string temp = vectorList.at(middle);
-		convertToLowerCase(temp);
-		if (s == temp)
-			return true;
-		if (s > (vectorList[middle])){
-			start = middle + 1;
-		}else{
-			end = middle - 1;
-		}
-	}
-	return false;*/
+
 	string temp = "";
 	convertToLowerCase(s);
 	for(unsigned int i = 0; i < vectorList.size(); i++){
@@ -65,12 +50,7 @@ void FindPalindrome::recursiveFindPalindromes(vector<string>
         candidateStringVector, vector<string> currentStringVector)
 {
 	vector<string> temp;
-	/*
-	if(cutTest1(candidateStringVector)){
-		return;}
-	if(cutTest2(candidateStringVector,currentStringVector)){
-		return;}
-	*/
+	
 	if(currentStringVector.size() == 0){
 		if(isPalindrome(tostring(candidateStringVector))){
 			palindromeCount++;
@@ -82,6 +62,16 @@ void FindPalindrome::recursiveFindPalindromes(vector<string>
 			candidateStringVector.push_back(currentStringVector.at(i));
 			temp = currentStringVector;
 			temp.erase(temp.begin() + i);
+			
+			if(cutTest1(candidateStringVector)){
+				//cout << "\t**cutTest1 passed true** with :" << tostring(candidateStringVector) << "\n";
+				return;
+			}
+			if(cutTest2(candidateStringVector,temp)){
+				//cout << "\t**cutTest2 passed true** with :" << tostring(candidateStringVector) << "\n";
+				return;
+			}
+			
 			recursiveFindPalindromes(candidateStringVector,temp);	
 			candidateStringVector.pop_back();
 		}
@@ -126,6 +116,7 @@ FindPalindrome::~FindPalindrome()
 
 int FindPalindrome::number() const
 {
+	
 	return palindromeCount;
 }
 
@@ -138,17 +129,11 @@ void FindPalindrome::clear()
 
 bool FindPalindrome::cutTest1(const vector<string> & stringVector)
 {
-		cout << "\nHit test 1 w/ " ;
-	for(auto& l : stringVector){
-		cout << l;}
-		cout  << "\n";
-	
 	int ct = 0;
 	int highest_ct = 0;
 	int highest = 0;
 	for(int k = 65; k < 91; k++){
 		ct = 0;
-		cout << "\nChar set to K = " << k ;
 		for(unsigned int i= 0; i < stringVector.size(); i ++){
 			for(unsigned int j = 0; j < stringVector[i].length(); j ++){
 				if(toupper(stringVector[i][j]) == k){
@@ -156,18 +141,15 @@ bool FindPalindrome::cutTest1(const vector<string> & stringVector)
 				}
 			}
 		}
-		
 		if(ct > highest){
 			highest = ct;
 			highest_ct = 1;
 		}else if(ct == highest){
 			highest_ct++;
 		}
-		cout << "    count for k = " << ct;
-		cout << "    count for highest_ct = " << highest_ct;
 	}
 	
-	if((highest % 2 != 0) && highest_ct > 1){
+	if((highest % 2 != 0) && highest_ct > 1 && highest > 1){
 		return true;
 	}
 	return false;
@@ -176,31 +158,68 @@ bool FindPalindrome::cutTest1(const vector<string> & stringVector)
 bool FindPalindrome::cutTest2(const vector<string> & stringVector1,
                               const vector<string> & stringVector2)
 {
-	unsigned int length = 0;
-	
-	if(tostring(stringVector1).length() <= tostring(stringVector2).length()){
-		length = tostring(stringVector2).length();
+	unsigned int lengthsmall= 0, lengthlong = 0;
+	bool string1smaller = false;
+	bool test = true;
+	string string1 = "", string2= "";
+	string1 = tostring(stringVector1);
+	string2 = tostring(stringVector2);
+	convertToLowerCase(string1);
+	convertToLowerCase(string2);
+	vector<int> count1,count2;
+	for(unsigned int k = 0; k < 26; k ++){
+		count1.push_back(0);
+		count2.push_back(0);
+	}
+	if(string1.length() >= string2.length()){
+		lengthsmall = string2.length();
+		lengthlong = string1.length();
 	}else{
-		length = tostring(stringVector1).length();
+		lengthsmall = string1.length();
+		lengthlong= string2.length();
+		string1smaller = true;
 	}
-	for(unsigned int i = 0; i < length; i ++){
-		
+	for(unsigned int i = 0; i < lengthsmall; i ++){
+		if(string1smaller){
+			count1[string1[i]-97]++;
+		}else{
+			count1[string2[i]-97]++;
+		}
+	}for(unsigned int j = 0; j < lengthlong; j ++){
+		if(string1smaller){
+			count2[string2[j]-97]++;
+		}else{
+			count2[string1[j]-97]++;
+		}
 	}
-	return false;
+
+	for(unsigned int m = 0; m < 26; m ++){
+		if(count2[m] <= count1[m]){
+			test = false;
+		}
+	}
+
+	return test;
 }
 
 bool FindPalindrome::add(const string & value)
 {
+	//parse through string
 	for(unsigned int i= 0; i < value.length(); i ++){
-		if((value[i] < 65 && value[i] > 90) || (value[i] < 97 && value[i] > 122)){
+		//test for character check
+		if((value[i] > 90 && value[i] < 97) || value[i] > 122 || value[i] < 65){
 			return false;
 		}
 	}
+	//see if string exists already
 	if(exist(value)){
 		return false;
 	}
+	//add back of vector list
 	vectorList.push_back(value);
 	palindromeList.clear();
+	
+	palindromeCount = 0;
 	vector<string> empty;
 	recursiveFindPalindromes(empty, vectorList);
 	return true;
@@ -211,30 +230,35 @@ bool FindPalindrome::add(const vector<string> & stringVector)
 	string value = "";
 	bool test = true;
 	unsigned int k;
+	//parse through array
 	for(k = 0; k < stringVector.size(); k++){
+		//get the string at point k
 		value = stringVector[k];
+		//parse throught string
 		for(unsigned int i= 0; i < value.length(); i ++){
-			if((value[i] < 65 && value[i] > 90) || (value[i] < 97 && value[i] > 122)){
-				test = false;
-				break;
+			//character test
+			if((value[i] > 90 && value[i] < 97) || value[i] > 122 || value[i] < 65){
+				return false;
 			}
 		}
+		//see if string exists already
 		if(exist(value)){
-			test = false;
-			break;
+			return false;
+		}else{
+			vectorList.push_back(value);
 		}
-		vectorList.push_back(value);
+		
 	}
-	if(!test){
-		for(unsigned int j = 0; j < k; j++){
-			vectorList.pop_back();
-		}
-	}
-	return test;
+	palindromeList.clear();
+	vector<string> empty;
+	palindromeCount = 0;
+	recursiveFindPalindromes(empty, vectorList);
+	return true;
 }
 
 vector< vector<string> > FindPalindrome::toVector() const
 {
 	return palindromeList;
 }
+
 

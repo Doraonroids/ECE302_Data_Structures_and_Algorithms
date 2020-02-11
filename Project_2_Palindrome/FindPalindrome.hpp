@@ -8,13 +8,22 @@ class FindPalindrome{
 
 private:
 	// private stuff that you define and implement goes here...
-	std::vector<std::string> vectorList;
-	std::vector<std::vector<std::string>> palindromeList;
-	int	palindromeCount;
-	// ...
+	std::vector<std::string> vectorList;//vector of strings to hold list of words
+	std::vector<std::vector<std::string> > palindromeList;//vector of vectors or strings to hold palindrome combinations
+	int	palindromeCount;//integer to keep count of possible palindromes
 	
+	
+	/** function to use a vector of strings as a string
+		Used this function to test vectors with string class functions
+		@param a vector of strings
+		@return the vector content as one string*/
 	std::string tostring(std::vector<std::string> vec) const;
-	bool exist(std::string s) const;//finds
+
+	/** function to find if a string exists in the list of words
+		declared as a const so data is not edited
+		@param a string to find in vectorList
+		@return true if found else false*/
+	bool exist(std::string s) const;
 	// private stuff that you are given or is specified in the project
 	// description...
 	
@@ -109,3 +118,4 @@ public:
 };
 
 #endif
+
