@@ -16,6 +16,7 @@ int main()
 		}
 		newString += "a";
 	}
+	
 	cout << "\nNumber of sentence palindromes are:  " << f.number() << endl;
 	cout << "\nThe sentence palindromes are:" << endl;
 	vector<vector<string>> vectorList = f.toVector();
@@ -26,6 +27,8 @@ int main()
 		cout << endl;
 	}
 	cout << endl;
+	
+	
 	cout << "\n******* Project 1 Main *********\n\n";
 	return 0;
 }

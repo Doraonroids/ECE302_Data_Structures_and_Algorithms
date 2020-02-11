@@ -33,8 +33,7 @@ bool FindPalindrome::exist(string s) const{
 	int start = 0, end = vectorList.size() - 1;
 	while (start <= end) {
 		int middle = start + (end - start) / 2;
-		
-		if (convertToLowerCase(s) == convertToLowerCase(vectorList[middle]))
+		if (toupper(s) == toupper(vectorList[middle]))
 			return true;
 		if (s > (vectorList[middle])){
 			start = middle + 1;
@@ -50,24 +49,30 @@ bool FindPalindrome::exist(string s) const{
 void FindPalindrome::recursiveFindPalindromes(vector<string>
         candidateStringVector, vector<string> currentStringVector)
 {
-	
+	vector<string> temp;
+	/*
 	if(cutTest1(candidateStringVector)){
 		return;}
 	if(cutTest2(candidateStringVector,currentStringVector)){
 		return;}
-		
-	if(isPalindrome(tostring(candidateStringVector))){
-		palindromeCount++;
-		palindromeList.push_back(candidateStringVector);
+	*/
+	if(currentStringVector.size() == 0){
+		if(isPalindrome(tostring(candidateStringVector))){
+			palindromeCount++;
+			palindromeList.push_back(candidateStringVector);
+			return;
+		}
+	}else if(currentStringVector.size() > 0){
+		for(unsigned int i = 0; i < currentStringVector.size(); i++){
+			candidateStringVector.push_back(currentStringVector.at(i));
+			temp = currentStringVector;
+			temp.erase(temp.begin() + i);
+			recursiveFindPalindromes(candidateStringVector,temp);	
+			candidateStringVector.pop_back();
+		}
+	}else{
+		cout << "ERROR IN RECURSION";
 	}
-	candidateStringVector.push_back(currentStringVector[currentStringVector.size() - 1]);
-	currentStringVector.pop_back();
-	if(currentStringVector.size() > 0){
-		recursiveFindPalindromes(candidateStringVector,currentStringVector);
-		candidateStringVector.pop_back();
-	}
-
-	
 	return;
 }
 
@@ -118,28 +123,36 @@ void FindPalindrome::clear()
 
 bool FindPalindrome::cutTest1(const vector<string> & stringVector)
 {
-	char most = 'A';
+		cout << "\nHit test 1 w/ " ;
+	for(auto& l : stringVector){
+		cout << l;}
+		cout  << "\n";
+	
 	int ct = 0;
 	int highest_ct = 0;
 	int highest = 0;
 	for(int k = 65; k < 91; k++){
 		ct = 0;
-		most = k;
+		cout << "\nChar set to K = " << k ;
 		for(unsigned int i= 0; i < stringVector.size(); i ++){
 			for(unsigned int j = 0; j < stringVector[i].length(); j ++){
-				if(toupper(stringVector[i][j]) == most){
+				if(toupper(stringVector[i][j]) == k){
 					ct++;
 				}
 			}
 		}
+		
 		if(ct > highest){
 			highest = ct;
 			highest_ct = 1;
 		}else if(ct == highest){
 			highest_ct++;
 		}
+		cout << "    count for k = " << ct;
+		cout << "    count for highest_ct = " << highest_ct;
 	}
-	if((highest_ct % 2 != 0) && highest_ct > 1){
+	
+	if((highest % 2 != 0) && highest_ct > 1){
 		return true;
 	}
 	return false;
