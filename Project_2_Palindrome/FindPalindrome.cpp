@@ -160,17 +160,22 @@ bool FindPalindrome::cutTest2(const vector<string> & stringVector1,
 {
 	unsigned int lengthsmall= 0, lengthlong = 0;
 	bool string1smaller = false;
-	bool test = true;
+	int test = 0;
 	string string1 = "", string2= "";
+	//make vectors strings for easy use
 	string1 = tostring(stringVector1);
 	string2 = tostring(stringVector2);
+	//make lowercase for easy comparison
 	convertToLowerCase(string1);
 	convertToLowerCase(string2);
+	//used to count characters in vectors
 	vector<int> count1,count2;
+	//fill vectors with 0's
 	for(unsigned int k = 0; k < 26; k ++){
 		count1.push_back(0);
 		count2.push_back(0);
 	}
+	//decide the smaller string and set length
 	if(string1.length() >= string2.length()){
 		lengthsmall = string2.length();
 		lengthlong = string1.length();
@@ -179,6 +184,7 @@ bool FindPalindrome::cutTest2(const vector<string> & stringVector1,
 		lengthlong= string2.length();
 		string1smaller = true;
 	}
+	//count characters in strings in proper place
 	for(unsigned int i = 0; i < lengthsmall; i ++){
 		if(string1smaller){
 			count1[string1[i]-97]++;
@@ -192,13 +198,15 @@ bool FindPalindrome::cutTest2(const vector<string> & stringVector1,
 			count2[string1[j]-97]++;
 		}
 	}
-
+	//determine test
 	for(unsigned int m = 0; m < 26; m ++){
-		if(count2[m] <= count1[m]){
-			test = false;
+		if(count2[m] < count1[m]){
+			test++;
 		}
 	}
-
+	if(test > 0)
+		test = 1;
+	
 	return test;
 }
 

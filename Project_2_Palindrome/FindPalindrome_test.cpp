@@ -92,5 +92,14 @@ TEST_CASE( "Test FindPalindrome test cutTest2 function", "[FindPalindrome]" )
 	testvec2.clear();
 	testvec2 = {"bbaa","bk"};
 	REQUIRE(f.cutTest2(testvec1,testvec2) == true);
+
+	FindPalindrome h;
+	std::vector<std::string> testvec4 = {"aa","bb","abc"};
+	std::vector<std::string> testvec3 = {"bbaa","ba"};
+	
+	REQUIRE(h.cutTest2(testvec3,testvec4) == false);
+	testvec3.clear();
+	testvec3 = {"bbaa","bk"};
+	REQUIRE(h.cutTest2(testvec3,testvec4) == true);
 }
 
