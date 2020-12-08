@@ -1,0 +1,42 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/doronroids/Documents/Project 3/Node.cpp
+cstddef
+-
+Node.hpp
+/home/doronroids/Documents/Project 3/Node.hpp
+
+/home/doronroids/Documents/Project 3/Node.hpp
+Node.cpp
+/home/doronroids/Documents/Project 3/Node.cpp
+
+/home/doronroids/Documents/Project 3/Stack.cpp
+iostream
+-
+cstddef
+-
+Stack.hpp
+/home/doronroids/Documents/Project 3/Stack.hpp
+Node.hpp
+/home/doronroids/Documents/Project 3/Node.hpp
+
+/home/doronroids/Documents/Project 3/Stack.hpp
+stdexcept
+-
+Node.hpp
+/home/doronroids/Documents/Project 3/Node.hpp
+Stack.cpp
+/home/doronroids/Documents/Project 3/Stack.cpp
+
+/home/doronroids/Documents/Project 3/mainStack.cpp
+iostream
+-
+Stack.hpp
+/home/doronroids/Documents/Project 3/Stack.hpp
+

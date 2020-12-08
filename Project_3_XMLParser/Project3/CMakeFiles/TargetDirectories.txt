@@ -1,0 +1,7 @@
+/home/doronroids/Documents/Project 3/CMakeFiles/rebuild_cache.dir
+/home/doronroids/Documents/Project 3/CMakeFiles/mainStack.dir
+/home/doronroids/Documents/Project 3/CMakeFiles/XMLParser-tests.dir
+/home/doronroids/Documents/Project 3/CMakeFiles/edit_cache.dir
+/home/doronroids/Documents/Project 3/CMakeFiles/mainXMLParser.dir
+/home/doronroids/Documents/Project 3/CMakeFiles/submission.dir
+/home/doronroids/Documents/Project 3/CMakeFiles/test.dir
